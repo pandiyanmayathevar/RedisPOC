@@ -1,0 +1,160 @@
+swagger: "2.0"
+info:
+  description: "FundInfo RedisCache MangoDB Demo"
+  version: "1.0.0"
+  title: "FundInfo"
+  termsOfService: ""
+basePath: "/"
+schemes:
+- "http"
+paths:
+  /fundinfo:
+    post:
+      tags:
+      - "fundinfo"
+      summary: "Add a new fund"
+      description: ""
+      operationId: "addfund"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Fund object that needs to be added"
+        required: true
+        schema:
+          $ref: "#/definitions/Fund"
+      responses:
+        405:
+          description: "Invalid input"
+    put:
+      tags:
+      - "fundinfo"
+      summary: "Update an existing fund"
+      description: ""
+      operationId: "updateFund"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Fund object that needs to be added"
+        required: true
+        schema:
+          $ref: "#/definitions/Fund"
+      responses:
+        400:
+          description: "Invalid ID supplied"
+        404:
+          description: "Fund not found"
+        405:
+          description: "Validation exception"
+    delete:
+      tags:
+      - "fundinfo"
+      summary: "delete an existing fund"
+      description: ""
+      operationId: "deleteFund"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Fund object that needs to be deleted"
+        required: true
+        schema:
+          $ref: "#/definitions/Fund"
+      responses:
+        400:
+          description: "Invalid ID supplied"
+        404:
+          description: "Fund not found"
+        405:
+          description: "Validation exception"          
+    get:
+      tags:
+      - "fundinfo"
+      summary: "Returns fund details"
+      description: "Returns fund details"
+      operationId: "getFund"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "object"
+            additionalProperties:
+              type: "integer"
+              format: "int32"
+      security:
+      - api_key: []
+  /fundinfo/findbycategory:
+    get:
+      tags:
+      - "fundinfo"
+      summary: "Returns fund details matching category"
+      description: "Returns fund details matching category"
+      operationId: "getFundWithCategory"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "categoryId"
+        in: "path"
+        description: "CategoryId"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "object"
+            additionalProperties:
+              type: "integer"
+              format: "int32"
+        400:
+          description: "Invalid categoryId supplied"              
+      security:
+      - api_key: []  
+securityDefinitions:
+  petstore_auth:
+    type: "oauth2"
+    authorizationUrl: "http://petstore.swagger.io/oauth/dialog"
+    flow: "implicit"
+    scopes:
+      write:pets: "modify pets in your account"
+      read:pets: "read your pets"
+  api_key:
+    type: "apiKey"
+    name: "api_key"
+    in: "header"
+definitions:
+  Fund:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int32"
+      fundName:
+        type: "string"
+      categoryId:
+        type: "integer"
+        format: "int32"
+      fundMangerName:
+        type: "string"
+      longName:
+        type: "string"
+      shortName:
+        type: "string"
+      cusipID:
+        type: "string"     
+    xml:
+      name: "Fund"

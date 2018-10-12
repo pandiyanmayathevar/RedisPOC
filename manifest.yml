@@ -1,0 +1,12 @@
+applications:
+#Application name
+- name: spring-redisCache-POC
+  instances: 1
+  buildpack: java_buildpack_offline
+  memory: 1G
+  disk_quota: 2048M
+  #Application Build path
+  path: target\fund-rediscache-demo-1.0.0.jar
+  services:
+  - Pandiyan-Redis
+  - Pandiyan-MySQL
